@@ -16,14 +16,7 @@ interface TextEditorWrapperProps {
 }
 
 const extensions = [
-  BaseKit.configure({
-    placeholder: {
-      showOnlyCurrent: true,
-    },
-    characterCount: {
-      limit: 50_000,
-    },
-  }),
+  BaseKit,
   Heading,
   Italic,
   Bold,
