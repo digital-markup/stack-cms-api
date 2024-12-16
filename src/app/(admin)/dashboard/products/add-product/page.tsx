@@ -1,3 +1,4 @@
+"use client";
 import React, { Suspense } from "react";
 import BasicInfo from "./components/basic-info";
 import { AdditionalInfo } from "./components/additional-info";
