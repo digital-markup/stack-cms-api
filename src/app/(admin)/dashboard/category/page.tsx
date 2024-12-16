@@ -9,10 +9,10 @@ async function CategoryPage() {
   const categories = await getCategories();
 
   return (
-    <div className="container mx-auto">
+    <div className="container mx-auto px-8">
       <Card className="shadow-none p-0">
         <CardHeader className="border-b flex justify-between w-full flex-row py-2 px-4 items-center">
-          <p className="text-lg font-semibold">Title</p>
+          <p className="text-lg font-semibold">All Categories</p>
           <Button className="rounded-full">Add New</Button>
         </CardHeader>
         <div className="w-full min-h-16 p-2">

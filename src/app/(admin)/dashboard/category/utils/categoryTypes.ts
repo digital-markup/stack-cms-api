@@ -6,3 +6,8 @@ export type Category = {
     created_at: string,
     updated_at: string
 };
+
+export type CategoryFormData = {
+    name: string,
+    slug: string
+}
