@@ -1,9 +1,9 @@
 "use client";
-import TextEditorWrapper from "@/components/text-editor-wrapper";
+import { TextEditorWrapper } from "@/components/text-editor-wrapper";
 import { Button } from "@/components/ui/button";
 import React from "react";
 
-function AdditionalInfo() {
+export function AdditionalInfo() {
   const [content, setContent] = React.useState("");
 
   const onChangeContent = () => {
@@ -25,5 +25,3 @@ function AdditionalInfo() {
     </div>
   );
 }
-
-export default AdditionalInfo;

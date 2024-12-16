@@ -24,7 +24,7 @@ const extensions = [
   Color
 ];
 
-function TextEditorWrapper({
+export function TextEditorWrapper({
   defaultValue,
   setContent,
 }: TextEditorWrapperProps) {
@@ -42,5 +42,3 @@ function TextEditorWrapper({
     </div>
   );
 }
-
-export default TextEditorWrapper;
