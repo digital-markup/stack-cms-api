@@ -14,10 +14,11 @@ import {
   VisibilityContainer,
 } from "./components/inventory-visibility-container";
 import AdditionalInformationContainer from "./components/additional-infomation-container";
+import submitProduct from "./actions/submitProduct";
 
 function AddProductPage() {
   return (
-    <div className="w-full h-full">
+    <div className="w-full h-full ">
       <Header title="add new product" navText="Back to products page" />
       <form className="pt-12">
         <div className="w-full grid grid-cols-2 gap-6">
@@ -50,7 +51,9 @@ function AddProductPage() {
                 <Button className="bg-slate-100 text-black hover:bg-slate-200">
                   Save as Draft
                 </Button>
-                <Button>Publish</Button>
+                <Button type="submit" formAction={submitProduct}>
+                  Publish
+                </Button>
               </section>
             </div>
           </div>

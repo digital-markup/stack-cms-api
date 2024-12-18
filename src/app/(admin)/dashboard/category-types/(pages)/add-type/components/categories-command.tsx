@@ -21,20 +21,21 @@ import React from "react";
 
 interface CategoriesCommandProps {
   categories: any;
+  className?: string;
 }
 
-function CategoriesCommand({ categories }: CategoriesCommandProps) {
+function CategoriesCommand({ categories, className }: CategoriesCommandProps) {
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState("");
   return (
-    <div>
+    <div className="w-full">
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button
             variant="outline"
             role="combobox"
             aria-expanded={open}
-            className="w-[200px] justify-between"
+            className={cn("w-[200px] justify-between", className)}
           >
             {value
               ? categories.find((category: any) => category.id === value)?.name
@@ -42,9 +43,11 @@ function CategoriesCommand({ categories }: CategoriesCommandProps) {
             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-[200px] p-0">
-          <Command>
-            <CommandInput placeholder="Search framework..." />
+        <PopoverContent
+          className={cn(className !== null ? "w-[500px]" : "w-[200px] p-0")}
+        > 
+          <Command className="max-h-[360px] w-full">
+            <CommandInput placeholder="Search framework..."/>
             <CommandList>
               <CommandEmpty>No framework found.</CommandEmpty>
               <CommandGroup>
