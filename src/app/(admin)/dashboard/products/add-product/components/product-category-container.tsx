@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/select";
 import getCategories from "../../../category/actions/getCategories";
 import { Category } from "../../../category/utils/categoryTypes";
+import TagsMultiSelect from "./tags-multi-select";
 
 const brands = [
   { brand: "meta" },
@@ -86,6 +87,7 @@ async function ProductCategoryContainer({ title }: ProductContainerProps) {
         </div>
         <div className="mb-4">
           <Label htmlFor="tags">Product Tags for Search</Label>
+          <TagsMultiSelect />
         </div>
       </div>
     </Card>
