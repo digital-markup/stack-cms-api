@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
 import React from "react";
@@ -6,7 +7,10 @@ import { Button } from "@/components/ui/button";
 import Loader from "@/components/loader";
 import { v4 as uuidv4 } from "uuid";
 import FileUpload from "./file-upload";
-import { useImagesUploadStore } from "../../store/useMediaStore";
+import {
+  useImagesUploadStore,
+  useSingleImageStore,
+} from "../../store/useMediaStore";
 import { MetaType } from "../../utils/productsTypes";
 import FileBuffer from "./file-buffer";
 import { toast } from "sonner";
@@ -117,4 +121,91 @@ function MultipleProductUploader() {
   );
 }
 
-export { MultipleProductUploader };
+function SingleMediaUploader() {
+  const [imageMeta, setImageMeta] = React.useState<MetaType | null>(null);
+  const [isLoading, setIsLoading] = React.useState(false);
+
+  const onDrop = React.useCallback((acceptedFiles: File[]) => {
+    // foreach the accepted files
+    acceptedFiles.forEach((file) => {
+      // create a reader
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        const result = reader.result as string;
+        // Remove the data URL prefix to get just the base64 data
+        const base64Data = result.replace(/^data:image\/\w+;base64,/, "");
+        setImageMeta((prev) => ({
+          id: uuidv4(),
+          title: file.name,
+          size: file.size,
+          url: URL.createObjectURL(file),
+          base64: base64Data,
+        }));
+      };
+
+      // read the file as base64
+      reader.readAsDataURL(file);
+    });
+  }, []);
+
+  const { getRootProps, getInputProps } = useDropzone({
+    onDrop,
+    maxFiles: 1,
+    multiple: true,
+    accept: {
+      "image/jpeg": [],
+      "image/webp": [],
+      "image/png": [],
+      "video/mp4": [],
+    },
+    maxSize: 50000000,
+  });
+
+  // save to zustand store
+  const { setImage } = useSingleImageStore();
+
+  // Upload to S3
+  const onUploadFilesHandler = () => {
+    if (imageMeta) {
+      setIsLoading(true);
+
+      const upload = uploadFile(imageMeta.base64 as string);
+      upload
+        .then((result) => {
+          if (result?.status === 200) {
+            setImage(result.key);
+            toast(`${imageMeta.title} uploaded successfully`);
+          }
+        })
+        .then(() => {
+          setIsLoading(false);
+        })
+        .finally(() => {
+          setImageMeta(null);
+        });
+    }
+  };
+  return (
+    <div className="w-full border rounded-lg flex flex-col gap-y-3 py-6 px-4">
+      <div className="bg-white border border-slate-400/50 border-dashed rounded-lg p-6">
+        <FileUpload inputProps={getInputProps} rootProps={getRootProps} />
+      </div>
+      <div className="flex items-center justify-between">
+        <p className="text-slate-500 text-sm">Add one only 1 image</p>
+        <Button
+          className="w-[200px]"
+          type="button"
+          size={"default"}
+          variant={"secondary"}
+          disabled={imageMeta === null || isLoading}
+          onClick={onUploadFilesHandler}
+        >
+          {isLoading ? <Loader text="Uploading" color="#1e293b" /> : "Upload"}
+        </Button>
+      </div>
+    </div>
+  );
+}
+
+export { MultipleProductUploader, SingleMediaUploader };

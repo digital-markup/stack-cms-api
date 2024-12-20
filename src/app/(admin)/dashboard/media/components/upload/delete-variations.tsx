@@ -1,12 +1,12 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
 import { toast } from "@/hooks/use-toast";
 import { deleteS3ObjectService } from "@/services/s3BucketService";
 import React from "react";
+import PreviewCard from "../preview-card";
 import { useImageVariantsStore } from "../../store/useMediaStore";
 
-function UploadVariations() {
+function DeleteVariations() {
   const { props, deleteProperty } = useImageVariantsStore();
 
   // handler for deleting both the image from store and from s3 bucket
@@ -34,8 +34,12 @@ function UploadVariations() {
           Product variations will be shown here
         </p>
       )}
+
+      {props.map((props, index) => (
+        <PreviewCard key={index} {...props} deleteProperty={handleDelete} />
+      ))}
     </div>
   );
 }
 
-export default UploadVariations;
+export default DeleteVariations;

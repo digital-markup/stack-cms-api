@@ -21,6 +21,12 @@ interface ImageVariantProps {
   clearStore: () => void;
 }
 
+interface SingleImageStoreProps {
+  image: ImageItem | null;
+  setImage: (imgUrl: string) => void;
+  deleteImage: () => void;
+}
+
 export const useImageVariantsStore = create<ImageVariantProps>()(
   persist(
     (set) => ({
@@ -65,6 +71,23 @@ export const useImagesUploadStore = create<ImageStoreProps>()(
     }),
     {
       name: "main-image-store",
+      storage: createJSONStorage(() => sessionStorage),
+    }
+  )
+);
+
+export const useSingleImageStore = create<SingleImageStoreProps>()(
+  persist(
+    (set) => ({
+      image: null,
+      setImage: (imgUrl) => {
+        const newImage: ImageItem = { id: crypto.randomUUID(), imgUrl };
+        set({ image: newImage });
+      },
+      deleteImage: () => set({ image: null }),
+    }),
+    {
+      name: "single-image-store",
       storage: createJSONStorage(() => sessionStorage),
     }
   )

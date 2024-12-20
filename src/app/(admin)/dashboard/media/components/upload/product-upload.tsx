@@ -18,18 +18,49 @@ import { useToast } from "@/hooks/use-toast";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { PlusIcon, Upload } from "lucide-react";
+import { PlusIcon } from "lucide-react";
 import { v4 as uuidv4 } from "uuid";
 import Loader from "@/components/loader";
 import { useImageVariantsStore } from "../../store/useMediaStore";
 import FileUpload from "./file-upload";
 import productSchema, { variantSchema } from "../../utils/validation";
-import { MultipleProductUploader } from "./product-media-uploader";
+import {
+  MultipleProductUploader,
+  SingleMediaUploader,
+} from "./product-media-uploader";
 import { MetaType } from "../../utils/productsTypes";
 import uploadFile from "../../services/uploadFile";
 import formatFileSize from "../../services/mediaSizeFormat";
 
-function ProductUploadModal() {
+interface ProductUploadModalProps {
+  children?: React.ReactNode | React.ReactNode[];
+}
+
+// Upload single product modal
+function SingleProductUploadModal({ children }: ProductUploadModalProps) {
+  return (
+    <div>
+      <Dialog>
+        <DialogTrigger asChild>
+          {children !== null ? (
+            children
+          ) : (
+            <Button variant={"outline"} size={"sm"}>
+              <PlusIcon className="w-4 h-4" />
+              Add Product
+            </Button>
+          )}
+        </DialogTrigger>
+        <DialogContent className="sm:max-w-[425px]">
+          <SingleMediaUploader />
+        </DialogContent>
+      </Dialog>
+    </div>
+  );
+}
+
+// Upload Variants
+function ProductUploadModal({ children }: ProductUploadModalProps) {
   const [imagesBuffer, setImagesBuffer] = React.useState<string[]>([]);
   const [imageMeta, setImageMeta] = React.useState<MetaType | null>(null);
   const [isLoading, setIsLoading] = React.useState(false);
@@ -97,22 +128,23 @@ function ProductUploadModal() {
       const imageBuffer = imagesBuffer[0];
       const upload = uploadFile(imageBuffer);
 
-      upload.then((result: any) => {
-        if (result?.status === 200) {
-          setProperty(result.key, formData.variantTitle as string);
-          setImageMeta(null);
-        }
-        setIsLoading(false);
-
-        //toaster for upload
-        toast({
-          title: "Product Variant uploaded.",
-          description: "Variant uploaded successfully.",
-          variant: "default",
+      upload
+        .then((result: any) => {
+          if (result?.status === 200) {
+            setProperty(result.key, formData.variantTitle as string);
+            setImageMeta(null);
+          }
+          setIsLoading(false);
+          reset();
+        })
+        .then(() => {
+          //toaster for upload
+          toast({
+            title: "Product Variant uploaded.",
+            description: "Variant uploaded successfully.",
+            variant: "default",
+          });
         });
-
-        reset();
-      });
     }
   };
 
@@ -120,10 +152,14 @@ function ProductUploadModal() {
     <div>
       <Dialog>
         <DialogTrigger asChild>
-          <Button variant={"outline"} size={"sm"}>
-            <PlusIcon className="w-4 h-4" />
-            Add Variant
-          </Button>
+          {children !== null ? (
+            children
+          ) : (
+            <Button variant={"outline"} size={"sm"}>
+              <PlusIcon className="w-4 h-4" />
+              Add Variant
+            </Button>
+          )}
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>
@@ -198,14 +234,22 @@ function ProductUploadModal() {
   );
 }
 
-const MultipleProductUploaderModal = () => {
+// Add multiple-products modal
+const MultipleProductUploaderModal = ({
+  children,
+}: ProductUploadModalProps) => {
   return (
     <div>
       <Dialog>
         <DialogTrigger asChild>
-          <Button variant={"default"}>
-            <Upload className="mr-2 h-4 w-4" /> Upload
-          </Button>
+          {children !== null ? (
+            children
+          ) : (
+            <Button variant={"outline"} size={"sm"}>
+              <PlusIcon className="w-4 h-4" />
+              Add Variant
+            </Button>
+          )}
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>
@@ -220,5 +264,5 @@ const MultipleProductUploaderModal = () => {
 
 MultipleProductUploaderModal.displayName = "MultipleProductModal";
 
-export { MultipleProductUploaderModal };
+export { MultipleProductUploaderModal, SingleProductUploadModal };
 export default ProductUploadModal;
