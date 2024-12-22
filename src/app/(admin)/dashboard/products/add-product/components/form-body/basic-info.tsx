@@ -13,8 +13,7 @@ function BasicInfo() {
       <div className="mt-3 flex flex-col gap-2">
         <Label>Colors</Label>
         <div className="flex justify-evenly items-center gap-2">
-          <Input id="color" name="color" />
-          <Input id="code" name="code" />
+          <Input id="color" name="color" placeholder="Desert Titanium, White Titanium, etc..."/>
         </div>
       </div>
       <div className="mt-3 flex flex-col gap-2">

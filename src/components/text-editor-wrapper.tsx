@@ -11,20 +11,13 @@ import RichTextEditor, {
 } from "reactjs-tiptap-editor";
 
 interface TextEditorWrapperProps {
-  defaultValue: string | "";
-  setContent: React.Dispatch<React.SetStateAction<string>>;
+  defaultValue: string;
+  setContent: (content: string) => void;
 }
 
-const extensions = [
-  BaseKit,
-  Heading,
-  Italic,
-  Bold,
-  BulletList,
-  Color
-];
+const extensions = [BaseKit, Heading, Italic, Bold, BulletList, Color];
 
-export function TextEditorWrapper({
+export default function TextEditorWrapper({
   defaultValue,
   setContent,
 }: TextEditorWrapperProps) {
@@ -32,13 +25,12 @@ export function TextEditorWrapper({
     setContent(content);
   };
   return (
-    <div>
-      <RichTextEditor
-        output="json"
-        content={defaultValue}
-        onChangeContent={onChangeContent}
-        extensions={extensions}
-      />
-    </div>
+    <RichTextEditor
+      dark={false}
+      output="html"
+      content={defaultValue}
+      onChangeContent={onChangeContent}
+      extensions={extensions}
+    />
   );
 }

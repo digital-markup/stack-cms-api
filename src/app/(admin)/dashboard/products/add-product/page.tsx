@@ -5,7 +5,6 @@ import FeatureImageContainer from "./components/feature-image-container";
 import ProductImagesContainer from "./components/product-images-container";
 import ServicesContainer from "./components/services-container";
 import PricingContainer from "./components/pricing-container";
-import { Button } from "@/components/ui/button";
 import ProductCategoryContainer from "./components/product-category-container";
 import BasicInformationContainer from "./components/basic-info-container";
 import VariantContainer from "./components/variant-container";
@@ -14,7 +13,7 @@ import {
   VisibilityContainer,
 } from "./components/inventory-visibility-container";
 import AdditionalInformationContainer from "./components/additional-infomation-container";
-import submitProduct from "./actions/submitProduct";
+import FormSubmitArea from "./components/form-body/form-submit-area";
 
 function AddProductPage() {
   return (
@@ -44,18 +43,9 @@ function AddProductPage() {
             <ServicesContainer title="Services" />
             {/* pricing */}
             <PricingContainer title="Pricing" />
-            <div className="w-full min-h-[100px] pt-6 flex justify-between items-center flex-row">
-              <Button variant={"outline"}>Cancel</Button>
-              <section className="flex flex-row gap-x-3">
-                <Button variant={"ghost"}>Schedule Publish</Button>
-                <Button className="bg-slate-100 text-black hover:bg-slate-200">
-                  Save as Draft
-                </Button>
-                <Button type="submit" formAction={submitProduct}>
-                  Publish
-                </Button>
-              </section>
-            </div>
+
+            {/* Submit the form */}
+            <FormSubmitArea />
           </div>
         </div>
       </form>
