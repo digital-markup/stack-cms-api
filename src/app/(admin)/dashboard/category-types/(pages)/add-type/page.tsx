@@ -4,8 +4,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import React from "react";
-import CategoriesCommand from "./components/categories-command";
 import getCategories from "../../../category/actions/getCategories";
+import createCategoryType from "../../actions/createCategoryType";
+import SelectCategory from "./components/select-category";
 
 async function AddTypePage() {
   const { data } = await getCategories();
@@ -13,7 +14,7 @@ async function AddTypePage() {
     <div className="container mx-auto px-8">
       <Card className="shadow-none p-0">
         <CardHeader className="border-b flex justify-start w-full py-2 px-4 items-center">
-          <p className="text-lg font-semibold">Add Category</p>
+          <p className="text-lg font-semibold">Add Category Type</p>
         </CardHeader>
         <div className="w-full min-h-16 p-2">
           <CardContent>
@@ -32,24 +33,27 @@ async function AddTypePage() {
                 <Input
                   name="slug"
                   type="text"
-                  placeholder="Category Type Slug (category name in lowercase)"
+                  placeholder="Category Type Slug (category type name in lowercase)"
                   required
                 />
               </div>
               <div className="mb-3">
                 <Label htmlFor="category">Categories</Label>
-                {data && <CategoriesCommand categories={data} />}
+                {data && <SelectCategory data={data} />}
               </div>
-              <div className="mb-3 flex justify-between items-center">
+              <div className="my-5 flex justify-between items-center w-[500px]">
                 <div className="flex flex-col gap-2">
                   <Label htmlFor="slug">Archived</Label>
                   <small className="text-slate-400">
                     If category is archived, it will not be visible
                   </small>
                 </div>
-                <Switch name="is_archived" />
+                <Switch name="isArchived" />
               </div>
-              <SubmitButton pendingText="Saving...">
+              <SubmitButton
+                pendingText="Saving..."
+                formAction={createCategoryType}
+              >
                 Save Category Type
               </SubmitButton>
             </form>

@@ -45,7 +45,7 @@ async function ProductCategoryContainer({ title }: ProductContainerProps) {
             <SelectContent>
               {data &&
                 data.map((category: Category) => (
-                  <SelectItem key={category.id} value={category.slug}>
+                  <SelectItem key={category.id} value={category.id}>
                     {category.name}
                   </SelectItem>
                 ))}

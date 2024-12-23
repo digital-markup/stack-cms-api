@@ -10,7 +10,7 @@ async function TypePage() {
       <Card className="shadow-none p-0">
         <CardHeader className="border-b flex justify-between w-full flex-row py-2 px-4 items-center">
           <p className="text-lg font-semibold">All Categories</p>
-          <Link href={"/dashboard/category-types/add-new"}>
+          <Link href={"/dashboard/category-types/add-type"}>
             <Button className="rounded-full">Add New</Button>
           </Link>
         </CardHeader>

@@ -12,7 +12,7 @@ function ServicesContainer({ title }: ProductContainerProps) {
         <p className="text-lg font-semibold">{title}</p>
       </CardHeader>
       <div className="w-full min-h-16 px-4 py-6">
-        <Select>
+        <Select name="services">
           <SelectTrigger className="w-full">
             <SelectValue placeholder="Select a Service" />
           </SelectTrigger>

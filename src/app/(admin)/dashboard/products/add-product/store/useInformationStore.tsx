@@ -6,6 +6,12 @@ interface InformationStore {
   resetContent: () => void;
 }
 
+interface BasicInfoStore {
+  context: string;
+  setContext: (context: string) => void;
+  resetContext: () => void;
+}
+
 export const useAdditionalInformationStore = create<InformationStore>(
   (set) => ({
     content: "",
@@ -13,3 +19,9 @@ export const useAdditionalInformationStore = create<InformationStore>(
     resetContent: () => set({ content: "" }),
   })
 );
+
+export const useBasicInformationStore = create<BasicInfoStore>((set) => ({
+  context: "",
+  setContext: (context) => set({ context }),
+  resetContext: () => set({ context: "" }),
+}));

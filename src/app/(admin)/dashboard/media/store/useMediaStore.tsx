@@ -18,7 +18,7 @@ interface ImageVariantProps {
   props: Array<{ id: string; imgUrl: string; variant: string }>;
   setProperty: (url: string, variant: string) => void;
   deleteProperty: (id: string) => void;
-  clearStore: () => void;
+  clearVariantStore: () => void;
 }
 
 interface SingleImageStoreProps {
@@ -46,7 +46,7 @@ export const useImageVariantsStore = create<ImageVariantProps>()(
         set((state) => ({
           props: state.props.filter((item) => item.id !== id),
         })),
-      clearStore: () => set({ props: [] }),
+        clearVariantStore: () => set({ props: [] }),
     }),
     {
       name: "img-variant-store",

@@ -5,7 +5,7 @@ import React from "react";
 import { ProductContainerProps } from "../utils/interfaces";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
-import { MultipleProductUploaderModal } from "../../../media/components/upload/product-upload";
+import ProductUploadModal from "../../../media/components/upload/product-upload";
 
 function VariantContainer({ title }: ProductContainerProps) {
   return (
@@ -16,11 +16,11 @@ function VariantContainer({ title }: ProductContainerProps) {
       <div className="w-full min-h-16 px-4 py-6">
         <div className="flex justify-between items-center">
           <p className="text-base capitalize">product variants</p>
-          <MultipleProductUploaderModal>
+          <ProductUploadModal>
             <Button>
               <Plus className="text-white" />
             </Button>
-          </MultipleProductUploaderModal>
+          </ProductUploadModal>
         </div>
       </div>
     </Card>
