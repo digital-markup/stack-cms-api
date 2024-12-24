@@ -12,4 +12,13 @@ const authentication = async () => {
     }
 }
 
+export const userCheck = async () => {
+    const supabase = await createClient();
+    const {
+        data: { user },
+    } = await supabase.auth.getUser();
+
+    return user;
+}
+
 export default authentication

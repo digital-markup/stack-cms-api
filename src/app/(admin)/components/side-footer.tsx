@@ -11,10 +11,16 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
-import { User2, ChevronUp } from "lucide-react";
+import { User2, ChevronUp, LogOutIcon } from "lucide-react";
 import React from "react";
+import { Button } from "@/components/ui/button";
+import { signOutAction } from "@/app/(auth-pages)/actions/actions";
 
 function SideFooter() {
+  const onSignOut = async () => {
+    await signOutAction();
+  };
+
   return (
     <SidebarMenu>
       <SidebarMenuItem>
@@ -33,7 +39,14 @@ function SideFooter() {
               <span>Account</span>
             </DropdownMenuItem>
             <DropdownMenuItem>
-              <span>Sign out</span>
+              <Button
+                variant={"ghost"}
+                className="bg-red-50 text-red-600"
+                onClick={onSignOut}
+              >
+                <LogOutIcon />
+                Sign out
+              </Button>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
