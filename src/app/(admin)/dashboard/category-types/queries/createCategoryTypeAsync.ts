@@ -4,7 +4,7 @@ import { createClient } from "@/utils/supabase/server";
 const createCategoryTypeAsync = async (categoryType: any): Promise<any> => {
     const supabase = await createClient();
 
-    const { data, error } = await supabase.from("types").insert(categoryType).select('id');
+    const { data, error } = await supabase.rpc('create_type', categoryType);
 
     if (error) {
         return error.message;

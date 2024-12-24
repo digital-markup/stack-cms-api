@@ -3,8 +3,11 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import TypesContainer from "./components/types-container";
 import Link from "next/link";
+import getCategoryTypes from "./actions/getCategoryTypes";
 
 async function TypePage() {
+  const categoryTypes = await getCategoryTypes();
+
   return (
     <div className="container mx-auto px-8">
       <Card className="shadow-none p-0">
@@ -15,7 +18,7 @@ async function TypePage() {
           </Link>
         </CardHeader>
         <div className="w-full min-h-16 p-2">
-          <TypesContainer />
+          <TypesContainer data={categoryTypes} />
         </div>
       </Card>
     </div>
