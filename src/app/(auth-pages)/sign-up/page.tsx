@@ -4,6 +4,14 @@ import Link from "next/link";
 import { signUpAction } from "../actions/actions";
 import { FormMessage, Message } from "@/components/form-message";
 import { SubmitButton } from "@/components/submit-button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 export default async function Signup(props: {
   searchParams: Promise<Message>;
@@ -19,32 +27,52 @@ export default async function Signup(props: {
 
   return (
     <>
-      <form className="flex flex-col min-w-64 max-w-64 mx-auto">
-        <h1 className="text-2xl font-medium">Sign up</h1>
-        <p className="text-sm text text-foreground">
-          Already have an account?{" "}
-          <Link className="text-primary font-medium underline" href="/sign-in">
-            Sign in
-          </Link>
-        </p>
-        <div className="flex flex-col gap-2 [&>input]:mb-3 mt-8">
-          <Label htmlFor="email">Email</Label>
-          <Input name="email" placeholder="you@example.com" required />
-          <Label htmlFor="password">Password</Label>
-          <Input
-            type="password"
-            name="password"
-            placeholder="Your password"
-            minLength={6}
-            required
-          />
-          <SubmitButton formAction={signUpAction} pendingText="Signing up...">
-            Sign up
-          </SubmitButton>
-          <FormMessage message={searchParams} />
+      <div className="container mx-auto px-16">
+        <div className="flex justify-center items-center h-screen">
+          <Card className="w-[350px]">
+            <CardHeader>
+              <CardTitle>Sign Up</CardTitle>
+              <CardDescription>
+                Create a new account using your email.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <form className="flex flex-col min-w-64 max-w-64 mx-auto">
+                <div className="flex flex-col gap-2 [&>input]:mb-3 mt-8">
+                  <Label htmlFor="email">Email</Label>
+                  <Input name="email" placeholder="you@example.com" required />
+                  <Label htmlFor="password">Password</Label>
+                  <Input
+                    type="password"
+                    name="password"
+                    placeholder="Your password"
+                    minLength={6}
+                    required
+                  />
+                  <SubmitButton
+                    formAction={signUpAction}
+                    pendingText="Signing up..."
+                  >
+                    Sign up
+                  </SubmitButton>
+                  <FormMessage message={searchParams} />
+                </div>
+              </form>
+            </CardContent>
+            <CardFooter>
+              <p className="text-sm text text-foreground">
+                Already have an account?{" "}
+                <Link
+                  className="text-primary font-medium underline"
+                  href="/sign-in"
+                >
+                  Sign in
+                </Link>
+              </p>
+            </CardFooter>
+          </Card>
         </div>
-      </form>
-      {/* <SmtpMessage /> */}
+      </div>
     </>
   );
 }

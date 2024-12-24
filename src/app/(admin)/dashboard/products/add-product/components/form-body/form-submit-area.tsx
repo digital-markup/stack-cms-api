@@ -57,13 +57,17 @@ function FormSubmitArea() {
     response
       .then((res) => {
         if (res.status === 200) {
-          clearStore();
-          clearVariantStore();
-          deleteImage();
+          alert("Product added successfully");
         }
       })
-      .then(() => alert("Product added successfully"))
-      .finally(() => window.location.reload());
+      .finally(() => {
+        clearStore();
+        clearVariantStore();
+        deleteImage();
+
+        // reset the form
+        window.location.reload();
+      });
   };
 
   return (
