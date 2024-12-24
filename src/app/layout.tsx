@@ -1,6 +1,5 @@
 import localFont from "next/font/local";
 import "./globals.css";
-import Navbar from "@/components/navbar";
 
 const neueMon = localFont({
   src: [
@@ -40,10 +39,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${neueMon.variable} antialiased`}>
-        <Navbar />
-        {children}
-      </body>
+      <body className={`${neueMon.variable} antialiased`}>{children}</body>
     </html>
   );
 }

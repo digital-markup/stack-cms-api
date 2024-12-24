@@ -13,7 +13,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { User2, ChevronUp, LogOutIcon } from "lucide-react";
 import React from "react";
-import { Button } from "@/components/ui/button";
 import { signOutAction } from "@/app/(auth-pages)/actions/actions";
 
 function SideFooter() {
@@ -38,15 +37,14 @@ function SideFooter() {
             <DropdownMenuItem>
               <span>Account</span>
             </DropdownMenuItem>
-            <DropdownMenuItem>
-              <Button
-                variant={"ghost"}
-                className="bg-red-50 text-red-600"
-                onClick={onSignOut}
-              >
+            <DropdownMenuItem
+              className="bg-red-50 text-red-600 w-full cursor-pointer"
+              onClick={onSignOut}
+            >
+              <span className="flex gap-x-2">
                 <LogOutIcon />
                 Sign out
-              </Button>
+              </span>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
