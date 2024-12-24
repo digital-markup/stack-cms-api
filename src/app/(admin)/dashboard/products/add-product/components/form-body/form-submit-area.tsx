@@ -10,7 +10,12 @@ import {
 } from "@/app/(admin)/dashboard/media/store/useMediaStore";
 import { useTagsStore } from "../../store/useTagsStore";
 import { SubmitButton } from "@/components/submit-button";
-import { useAdditionalInformationStore } from "../../store/useInformationStore";
+import {
+  useAdditionalInformationStore,
+  useBasicInformationStore,
+} from "../../store/useInformationStore";
+import productSubmitAction from "../../actions/submitProduct";
+import parseArray from "../../utils/parseArray";
 
 function FormSubmitArea() {
   // get the data from the stores
@@ -19,34 +24,46 @@ function FormSubmitArea() {
   const { props, clearVariantStore } = useImageVariantsStore();
   const { items } = useTagsStore();
   const { content } = useAdditionalInformationStore();
+  const { context: basicInfo } = useBasicInformationStore();
 
   const submitProduct = (data: FormData) => {
     const productData = {
       title: data.get("title") as string,
       product_description: data.get("product_description") as string,
-      category: data.get("category") as string,
-      type: data.get("type") as string,
+      category_id: data.get("category") as string,
+      type_id: data.get("type") as string,
       tags: items,
-      brand: data.get("brand") as string,
+      brand_id: data.get("brand") as string,
       display_info: data.get("displayInfo") as string,
       battery: data.get("battery") as string,
-      memory: data.get("memory") as string,
+      storage: parseArray(data.get("memory") as string),
       camera: data.get("camera") as string,
       ram_information: data.get("hardware") as string,
-      colors: data.get("color") as string,
+      colors: parseArray(data.get("color") as string),
+      basic_information: basicInfo,
       feature_image: image,
       images: images,
       variations: props,
       services: data.get("services") as string,
-      basic_information: content,
+      additional_information: content,
       stock: data.get("stock") as string,
       sku: data.get("sku") as string,
-      availability: data.get("availability") as string,
+      availability: true,
       compare_at_price: false,
       is_published: true,
     };
 
-    console.log(productData);
+    const response = productSubmitAction(productData);
+    response
+      .then((res) => {
+        if (res.status === 200) {
+          clearStore();
+          clearVariantStore();
+          deleteImage();
+        }
+      })
+      .then(() => alert("Product added successfully"))
+      .finally(() => window.location.reload());
   };
 
   return (

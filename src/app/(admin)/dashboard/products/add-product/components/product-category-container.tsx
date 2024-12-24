@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 import { Card, CardHeader } from "@/components/ui/card";
 import React from "react";
@@ -13,22 +14,15 @@ import {
 import getCategories from "../../../category/actions/getCategories";
 import { Category } from "../../../category/utils/categoryTypes";
 import TagsMultiSelect from "./tags-multi-select";
-
-const brands = [
-  { brand: "meta" },
-  { brand: "huawei" },
-  { brand: "samsung" },
-  { brand: "jbl" },
-  { brand: "tcl" },
-  { brand: "xiaomi" },
-  { brand: "zte" },
-  { brand: "apple" },
-  { brand: "oppo" },
-  { brand: "nokia" },
-];
+import getCategoryTypes, {
+  getBrands,
+} from "../../../category-types/actions/getCategoryTypes";
+import { CategoryType } from "../../../category-types/utils/helper/typeIndex";
 
 async function ProductCategoryContainer({ title }: ProductContainerProps) {
   const { data } = await getCategories();
+  const { data: types } = await getCategoryTypes();
+  const { data: brands } = await getBrands();
 
   return (
     <Card className="shadow-none p-0">
@@ -59,10 +53,12 @@ async function ProductCategoryContainer({ title }: ProductContainerProps) {
               <SelectValue placeholder="Select Product Type" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="iphone">iPhone</SelectItem>
-              <SelectItem value="ipad">iPad</SelectItem>
-              <SelectItem value="galaxy">Galaxy</SelectItem>
-              <SelectItem value="earbuds">Earbuds</SelectItem>
+              {types &&
+                types.map((type: CategoryType) => (
+                  <SelectItem key={type.id} value={type.id}>
+                    {type.name}
+                  </SelectItem>
+                ))}
             </SelectContent>
           </Select>
         </div>
@@ -73,13 +69,13 @@ async function ProductCategoryContainer({ title }: ProductContainerProps) {
               <SelectValue placeholder="Select Brand" />
             </SelectTrigger>
             <SelectContent>
-              {brands.map((brand, idx: number) => (
+              {brands.map((brand: any) => (
                 <SelectItem
-                  key={idx}
-                  value={brand.brand}
+                  key={brand.id}
+                  value={brand.id}
                   className="capitalize"
                 >
-                  {brand.brand}
+                  {brand.name}
                 </SelectItem>
               ))}
             </SelectContent>

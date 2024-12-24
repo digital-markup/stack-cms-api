@@ -1,3 +1,4 @@
+"use server";
 import createProductAsync from "../queries/createProductAsync";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */

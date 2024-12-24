@@ -1,3 +1,4 @@
+"use server";
 import { Card, CardHeader } from "@/components/ui/card";
 import React from "react";
 import { Button } from "@/components/ui/button";
