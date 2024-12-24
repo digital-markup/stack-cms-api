@@ -11,13 +11,15 @@ import {
   SelectContent,
   SelectItem,
 } from "@/components/ui/select";
-import getCategories from "../../../category/actions/getCategories";
-import { Category } from "../../../category/utils/categoryTypes";
+
 import TagsMultiSelect from "./tags-multi-select";
+
+import { Category } from "@/app/(admin)/dashboard/category/utils/categoryTypes";
+import getCategories from "@/app/(admin)/dashboard/category/actions/getCategories";
 import getCategoryTypes, {
   getBrands,
-} from "../../../category-types/actions/getCategoryTypes";
-import { CategoryType } from "../../../category-types/utils/helper/typeIndex";
+} from "@/app/(admin)/dashboard/category-types/actions/getCategoryTypes";
+import { CategoryType } from "@/app/(admin)/dashboard/category-types/utils/helper/typeIndex";
 
 async function ProductCategoryContainer({ title }: ProductContainerProps) {
   const { data } = await getCategories();

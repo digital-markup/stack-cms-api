@@ -1,4 +1,4 @@
-import createProductAsync from "@/app/(admin)/dashboard/products/add-product/queries/createProductAsync";
+import createProductAsync from "@/app/(admin)/dashboard/products/(pages)/add-product/queries/createProductAsync";
 import { NextRequest, NextResponse } from "next/server";
 
 const POST = async (req: NextRequest) => {

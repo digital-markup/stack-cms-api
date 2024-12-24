@@ -5,7 +5,7 @@ import React from "react";
 import { ProductContainerProps } from "../utils/interfaces";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
-import ProductUploadModal from "../../../media/components/upload/product-upload";
+import ProductUploadModal from "@/app/(admin)/dashboard/media/components/upload/product-upload";
 
 function VariantContainer({ title }: ProductContainerProps) {
   return (
